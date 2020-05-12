@@ -2,6 +2,7 @@ package com.example.loginpage.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -51,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    //Reacting to login result(response from ViewModel)
     private fun observeLoginResult() {
         userVM.loginResult.observe(this, Observer {
             when(it) {
@@ -61,11 +63,13 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    //Setting error if validation was wrong in username input view
     private fun setUserNameError(errorMsg: String){
         binding.editUsername.error = errorMsg
         binding.editUsername.requestFocus()
     }
 
+    //Setting error if validation was wrong in password input view
     private fun setPasswordError(errorMsg: String){
         binding.editPassword.error = errorMsg
         binding.editPassword.requestFocus()
@@ -75,5 +79,11 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    fun signUp(view: View) {
+        Intent(this, SignUpActivity::class.java).also {
+            startActivity(it)
+        }
     }
 }
