@@ -1,7 +1,8 @@
-package com.example.loginpage
+package com.example.loginpage.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.loginpage.R
 
 class MainActivity : AppCompatActivity() {
 
