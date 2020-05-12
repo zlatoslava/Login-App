@@ -5,4 +5,8 @@
     <string name="edit_text_password">Password</string>
     <string name="button_sign_in">Sign in</string>
     <string name="button_sign_up">Don`t have an account? Sign up!</string>
+
+    <string name="sign_up">Sign up</string>
+    <string name="edit_text_password_confirm">Confirm password</string>
+    <string name="button_sign_up_activity">Sign up</string>
 </resources>
