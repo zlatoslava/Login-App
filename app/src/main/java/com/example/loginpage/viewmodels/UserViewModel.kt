@@ -56,10 +56,6 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
         Log.d("mtag", "$loggedInUsername + $loggedInPassword")
 
-        if (loggedInUsername == "Default") {
-            loginResult.value = LoginResult.NO_SUCH_USER.value
-            return
-        }
         if (loggedInUsername != user.username.trim() || loggedInPassword != user.password.trim()) {
             loginResult.value = LoginResult.LOGIN_ERROR.value
             return

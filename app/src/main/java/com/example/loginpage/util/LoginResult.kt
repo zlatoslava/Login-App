@@ -6,7 +6,6 @@ enum class LoginResult(val value: Int) {
     SHORT_PASSWORD(2),
     LONG_USERNAME(3),
     LOGIN_ERROR(4),
-    NO_SUCH_USER(5),
     SUCCESSFUL(6),
     OK(7),
     PASSWORD_CONFIRMATION_ERROR(8),
