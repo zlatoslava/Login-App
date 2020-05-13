@@ -22,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-
         userVM = ViewModelProvider(this, ViewModelFactory(application)).get(UserViewModel::class.java)
+
         binding.userVM = userVM
         binding.executePendingBindings() //To apply binding immediately (before the view state is restored)
 
@@ -36,8 +36,8 @@ class LoginActivity : AppCompatActivity() {
         // Reacting to password validation result
         userVM.passwordValidation.observe(this, Observer {
             when(it) {
-                LoginResult.EMPTY_PASSWORD.value -> setPasswordError("Please enter password")
-                LoginResult.SHORT_PASSWORD.value -> setPasswordError("Password should contain more than 5 letters")
+                LoginResult.EMPTY_PASSWORD.value -> setPasswordError(getString(R.string.password_error_no_password))
+                LoginResult.SHORT_PASSWORD.value -> setPasswordError(getString(R.string.password_error_short_password))
                 else -> binding.editPassword.error = null
             }
         })
@@ -45,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
         // Reacting to username validation result
         userVM.usernameValidation.observe( this, Observer { newValue: Int ->
             when(newValue) {
-                LoginResult.EMPTY_USERNAME.value -> setUserNameError("Please enter username")
-                LoginResult.LONG_USERNAME.value -> setUserNameError("Username is too long")
+                LoginResult.EMPTY_USERNAME.value -> setUserNameError(getString((R.string.username_error_no_username)))
+                LoginResult.LONG_USERNAME.value -> setUserNameError(getString((R.string.username_error_long_username)))
                 else -> binding.editUsername.error = null
             }
         })
@@ -56,8 +56,8 @@ class LoginActivity : AppCompatActivity() {
     private fun observeLoginResult() {
         userVM.loginResult.observe(this, Observer {
             when(it) {
-                LoginResult.NO_SUCH_USER.value -> Toast.makeText(this, "No such user, please sign up!", Toast.LENGTH_SHORT).show() //TODO: reformat to snackbar
-                LoginResult.LOGIN_ERROR.value -> Toast.makeText(this, "Username or login is incorrect. Try again or sign up!", Toast.LENGTH_SHORT).show()
+                LoginResult.NO_SUCH_USER.value -> Toast.makeText(this, R.string.login_error_no_such_user, Toast.LENGTH_SHORT).show() //TODO: reformat to snackbar
+                LoginResult.LOGIN_ERROR.value -> Toast.makeText(this, R.string.login_error_incorrect_input, Toast.LENGTH_SHORT).show()
                 LoginResult.SUCCESSFUL.value -> startMainActivity();
             }
         })

@@ -9,4 +9,12 @@
     <string name="sign_up">Sign up</string>
     <string name="edit_text_password_confirm">Confirm password</string>
     <string name="button_sign_up_activity">Sign up</string>
+    <string name="password_error_no_password">Please enter password</string>
+    <string name="password_error_short_password">Password should contain more than 5 letters</string>
+    <string name="password_error_password_not_confirmed">Wrong password! Please type again</string>
+    <string name="username_error_no_username">Please enter username</string>
+    <string name="username_error_long_username">Username is too long</string>
+    <string name="login_error_no_such_user">No such user, please sign up!</string>
+    <string name="login_error_incorrect_input">Username or login is incorrect. Try again or sign up!</string>
+    <string name=""></string>
 </resources>

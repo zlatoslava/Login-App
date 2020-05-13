@@ -35,9 +35,9 @@ class SignUpActivity : AppCompatActivity() {
         // Reacting to password validation result
         userVM.passwordValidation.observe(this, Observer {
             when (it) {
-                LoginResult.EMPTY_PASSWORD.value -> setPasswordError("Please enter password")
-                LoginResult.SHORT_PASSWORD.value -> setPasswordError("Password should contain more than 5 letters")
-                LoginResult.PASSWORD_CONFIRMATION_ERROR.value -> setPasswordConfirmationError("Wrong password! Please type again")
+                LoginResult.EMPTY_PASSWORD.value -> setPasswordError(getString(R.string.password_error_no_password))
+                LoginResult.SHORT_PASSWORD.value -> setPasswordError(getString(R.string.password_error_short_password))
+                LoginResult.PASSWORD_CONFIRMATION_ERROR.value -> setPasswordConfirmationError(getString(R.string.password_error_password_not_confirmed))
                 else -> resetPasswordError()
             }
         })
@@ -45,8 +45,8 @@ class SignUpActivity : AppCompatActivity() {
         // Reacting to username validation result
         userVM.usernameValidation.observe(this, Observer { newValue: Int ->
             when (newValue) {
-                LoginResult.EMPTY_USERNAME.value -> setUserNameError("Please enter username")
-                LoginResult.LONG_USERNAME.value -> setUserNameError("Username is too long")
+                LoginResult.EMPTY_USERNAME.value -> setUserNameError(getString(R.string.username_error_no_username))
+                LoginResult.LONG_USERNAME.value -> setUserNameError(getString((R.string.username_error_long_username)))
                 else -> binding.editUsername.error = null
             }
         })
