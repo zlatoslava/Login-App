@@ -34,13 +34,21 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         validateUsername()
         validatePassword()
 
-        if(isInputValid() && isPasswordConfirmed()) { //check
+        if (isInputValid() && isPasswordConfirmed()) { //check if data is valid and password typed correctly
             //write user data to shared pref
+            writeUserToSharedPref()
             loginResult.value = LoginResult.SUCCESSFUL.value
         }
     }
 
-    private fun checkIfUserLogged(){
+    private fun writeUserToSharedPref() {
+        val editor = preferences.edit()
+        editor.putString(PREF_USERNAME, user.username)
+        editor.putString(PREF_USER_PASSWORD, user.password)
+        editor.apply()
+    }
+
+    private fun checkIfUserLogged() {
         val loggedInUsername =
             preferences.getString(PREF_USERNAME, "Default")
         val loggedInPassword =
@@ -82,7 +90,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         passwordValidation.value == LoginResult.OK.value && usernameValidation.value == LoginResult.OK.value
 
     private fun isPasswordConfirmed(): Boolean {
-        if(passwordConfirmation.get() != user.password) {
+        if (passwordConfirmation.get() != user.password) {
             passwordValidation.value = LoginResult.PASSWORD_CONFIRMATION_ERROR.value
             return false
         }

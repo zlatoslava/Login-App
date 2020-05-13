@@ -1,5 +1,6 @@
 package com.example.loginpage.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -77,5 +78,11 @@ class SignUpActivity : AppCompatActivity() {
     private fun setPasswordError(errorMsg: String) {
         binding.editPassword.error = errorMsg
         binding.editPassword.requestFocus()
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
