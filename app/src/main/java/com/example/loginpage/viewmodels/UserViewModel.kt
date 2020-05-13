@@ -3,6 +3,7 @@ package com.example.loginpage.viewmodels
 import android.app.Application
 import androidx.preference.PreferenceManager
 import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.loginpage.models.User
@@ -17,6 +18,7 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     var loginResult = MutableLiveData<Int>()
     var passwordValidation = MutableLiveData<Int>()
     var usernameValidation = MutableLiveData<Int>()
+    var passwordConfirmation = ObservableField<String>()
 
     fun login() {
         validatePassword()
@@ -25,10 +27,17 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         if (isInputValid()) {
             checkIfUserLogged()
         }
+
     }
 
     fun signUp() {
+        validateUsername()
+        validatePassword()
 
+        if(isInputValid() && isPasswordConfirmed()) { //check
+            //write user data to shared pref
+            loginResult.value = LoginResult.SUCCESSFUL.value
+        }
     }
 
     private fun checkIfUserLogged(){
@@ -71,4 +80,12 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun isInputValid() =
         passwordValidation.value == LoginResult.OK.value && usernameValidation.value == LoginResult.OK.value
+
+    private fun isPasswordConfirmed(): Boolean {
+        if(passwordConfirmation.get() != user.password) {
+            passwordValidation.value = LoginResult.PASSWORD_CONFIRMATION_ERROR.value
+            return false
+        }
+        return true
+    }
 }

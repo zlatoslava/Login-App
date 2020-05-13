@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.SignUpActivity">
+        tools:context=".ui.SignUpActivity"
+        android:background="@drawable/sign_up_background">
 
         <TextView
             android:id="@+id/text_view"
@@ -95,7 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="@={userVM.passwordConfirmation}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,8 +106,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:onClick="@{() -> userVM.signUp()}"
             android:text="@string/button_sign_up_activity"
+            android:onClick="@{() -> userVM.signUp()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

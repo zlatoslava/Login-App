@@ -3,9 +3,11 @@ package com.example.loginpage.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.loginpage.R
 import com.example.loginpage.databinding.ActivitySignUpBinding
+import com.example.loginpage.util.LoginResult
 import com.example.loginpage.viewmodels.UserViewModel
 import com.example.loginpage.viewmodels.ViewModelFactory
 
@@ -22,5 +24,58 @@ class SignUpActivity : AppCompatActivity() {
             ViewModelProvider(this, ViewModelFactory(application)).get(UserViewModel::class.java)
         binding.userVM = userVM
         binding.executePendingBindings() //To apply binding immediately (before the view state is restored)
+
+        observeDataValidation()
+        observeSignUpResult()
+    }
+
+    //Observe changes in variables(passwordValidation and usernameValidation)
+    private fun observeDataValidation() {
+        // Reacting to password validation result
+        userVM.passwordValidation.observe(this, Observer {
+            when (it) {
+                LoginResult.EMPTY_PASSWORD.value -> setPasswordError("Please enter password")
+                LoginResult.SHORT_PASSWORD.value -> setPasswordError("Password should contain more than 5 letters")
+                LoginResult.PASSWORD_CONFIRMATION_ERROR.value -> setPasswordConfirmationError("Wrong password! Please type again")
+                else -> resetPasswordError()
+            }
+        })
+
+        // Reacting to username validation result
+        userVM.usernameValidation.observe(this, Observer { newValue: Int ->
+            when (newValue) {
+                LoginResult.EMPTY_USERNAME.value -> setUserNameError("Please enter username")
+                LoginResult.LONG_USERNAME.value -> setUserNameError("Username is too long")
+                else -> binding.editUsername.error = null
+            }
+        })
+    }
+
+    private fun observeSignUpResult() {
+        userVM.loginResult.observe(this, Observer {
+            if (it == LoginResult.SUCCESSFUL.value) {
+                startMainActivity()
+            }
+        })
+    }
+
+    private fun resetPasswordError(){
+        binding.editPassword.error = null
+        binding.editPasswordConfirm.error = null
+    }
+
+    private fun setPasswordConfirmationError(errorMsg: String) {
+        binding.editPasswordConfirm.error = errorMsg
+        binding.editPasswordConfirm.requestFocus()
+    }
+
+    private fun setUserNameError(errorMsg: String) {
+        binding.editUsername.error = errorMsg
+        binding.editUsername.requestFocus()
+    }
+
+    private fun setPasswordError(errorMsg: String) {
+        binding.editPassword.error = errorMsg
+        binding.editPassword.requestFocus()
     }
 }

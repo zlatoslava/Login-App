@@ -8,5 +8,6 @@ enum class LoginResult(val value: Int) {
     LOGIN_ERROR(4),
     NO_SUCH_USER(5),
     SUCCESSFUL(6),
-    OK(7)
+    OK(7),
+    PASSWORD_CONFIRMATION_ERROR(8),
 }
